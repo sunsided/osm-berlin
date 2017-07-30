@@ -3,6 +3,7 @@ import bz2
 
 from xml.etree.cElementTree import iterparse, Element, ParseError
 from typing import Any, Union, Iterable, Tuple, Optional
+
 from tqdm import tqdm
 
 

@@ -19,10 +19,11 @@ cnt = Counter()
 progress = tqdm()
 stack = []
 
-for event in open_and_parse(args.file, events=('start', 'end'), progress=progress):
-    ev, tag = event[0], event[1].tag
+for ev, el in open_and_parse(args.file, events=('start', 'end'), progress=progress):
     if ev == 'start':
-        stack.append(tag)
+        if el.tag == 'osm':
+            assert 'version' in el.attrib and el.attrib['version'] == '0.6', 'Unknown version of the OSM format.'
+        stack.append(el.tag)
         path = '.'.join(stack)
         cnt[path] += 1
     else:
