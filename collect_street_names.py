@@ -45,7 +45,7 @@ def main():
             for tag in street_name_tags:
                 street_names.add(tag.attrib['v'])
 
-    with open(args.out, 'w') as f:
+    with open(args.out, 'w', encoding='utf-8') as f:
         first = True
         for s in sorted(street_names):
             if not first:

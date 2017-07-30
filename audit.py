@@ -15,6 +15,7 @@ def is_street_name(elem):
     return elem.attrib['k'] == 'addr:street'
 
 
+# street_types_re = re.compile(r'(\b(allee)|(str\.?|stra(ß|ss)e|weg|platz))$', re.IGNORECASE)
 street_types_re = re.compile(r'(\b(allee)|([^\b]|er\s)(straße|weg|platz))$', re.IGNORECASE)
 
 
@@ -38,8 +39,7 @@ def validate_osm_version(events):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('file', default='berlin_germany.osm.bz2', nargs='?', help='The OSM map file to scan.')
-    parser.add_argument('--out', type=str, default='street_names.txt', help='The file to write street names to.')
+    parser.add_argument('file', default='berlin_custom.osm.bz2', nargs='?', help='The OSM map file to scan.')
     args = parser.parse_args()
 
     if not os.path.exists(args.file) or not os.path.isfile(args.file):
@@ -51,16 +51,15 @@ def main():
     events = open_and_parse(args.file, events=('start',), progress=progress)
     validate_osm_version(events)
 
-    street_names = set()
+    invalid_street_names = set()
     for ev, el in events:
         assert el.tag != 'osm'
         if el.tag == 'way':
             street_name_tags = (tag for tag in el.iter('tag') if is_street_name(tag))
             for tag in street_name_tags:
-                collect_street_type(street_names, tag.attrib['v'])
+                audit_street_type(invalid_street_names, tag.attrib['v'])
 
-    with open(args.out, 'w') as f:
-        f.writelines(street_names)
+    pprint(invalid_street_names)
 
 
 if __name__ == '__main__':
