@@ -63,6 +63,7 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
 # The following set contains all rules gathered during initial screening
 # of the dataset. If any of the rules evaluates positively, we assume
 # the street name is correct.
+# Each rule is commented with examples for street names they capture.
 valid_street_names = {
         # Einheit
         # Hüsung
