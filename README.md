@@ -3,24 +3,23 @@
 This project deals with wrangling of OpenStreetMap data of Berlin, Germany.
 Two regions were used:
 
-* A custom crop of the Berlin city area from [Mapzen Metro Extracts](https://mapzen.com/data/metro-extracts/metro/berlin_germany/101748799/Berlin/).
+* A custom crop of the Berlin city area.
     * Region: `52.3319824..52.6797125 N`, `13.0709838..13.7741088 E` ([OSM](http://www.openstreetmap.org/#map=11/52.5062/13.4222)).
     * `96 MB` compressed, `1.4 GB` decompressed XML.
 * A smaller sample of the Mitte district of Berlin.
     * Region: `52.53391..52.52828 N`, `13.19381..13.41020 E` ([OSM](http://www.openstreetmap.org/#map=17/52.53110/13.40201)).
     * `250 KB` compressed, `3.7 MB` decompressed XML.
 
+Both can be downloaded e.g. by querying the XAPI Compatibility Layer
+of the Overpass API (see [here](https://wiki.openstreetmap.org/wiki/Overpass_API/XAPI_Compatibility_Layer)):
+
+```bash
+wget -O berlin.osm 'http://www.overpass-api.de/api/xapi?*[bbox=13.0709838,52.3319824,13.7741088,52.6797125][@meta][@timeout=3600]'
+wget -O berlin-mitte.osm 'http://www.overpass-api.de/api/xapi?*[bbox=13.39977,52.52912,13.40550,52.53794][@meta]'
+```
+
 These are of particular interest to me, because Berlin is my hometown and Berlin Mitte
 is the district in which I grew up and went to school.
-
-The directly available Berlin city region from Mapzen was only used to obtain
-an overview over the possible tags occurring. It was not used further because it
-spans large areas surrounding Berlin (crossing country boundaries as well).
-It can be found here:
-
-* Berlin city area from [Mapzen Metro Extracts](https://mapzen.com/data/metro-extracts/metro/berlin_germany/101748799/Berlin/).
-    * Region: `51.849..52.994 N`, `12.26..14.699 E` ([OSM](http://www.openstreetmap.org/#map=9/52.4259/13.4789)).
-    * `198 MB` compressed, `2.7 GB` decompressed XML.
 
 ## OSM XML tag survey
 
@@ -29,15 +28,14 @@ following [OSM XML](http://wiki.openstreetmap.org/wiki/OSM_XML) tag paths (and t
 
 ```
          1 osm
-   1733505 osm.way
-  11214185 osm.node
-         1 osm.bounds
-  14418967 osm.way.nd
-   4616769 osm.way.tag
-   3717622 osm.node.tag
-     27798 osm.relation
-    131360 osm.relation.tag
-    375936 osm.relation.member
+    935050 osm.way
+         1 osm.note
+         1 osm.meta
+   6007598 osm.node
+   7429732 osm.way.nd
+         1 osm.remark
+   2738458 osm.way.tag
+   3215065 osm.node.tag
 ```
 
 where `osm ` is the root element.
@@ -45,15 +43,16 @@ The smaller Berlin Mitte region, in contrast, contains the following counts:
 
 ```
          1 osm
-      1527 osm.way
-     13089 osm.node
-         1 osm.bounds
-     16340 osm.way.nd
-      4122 osm.way.tag
-     10293 osm.node.tag
-        90 osm.relation
-       656 osm.relation.tag
-      4507 osm.relation.member
+       864 osm.way
+         1 osm.note
+         1 osm.meta
+      7580 osm.node
+      8788 osm.way.nd
+      2854 osm.way.tag
+      5518 osm.node.tag
+        40 osm.relation
+       332 osm.relation.tag
+      2539 osm.relation.member
 ```
 
 A description of the base elements `node`, `way`, `relation` and `tag`

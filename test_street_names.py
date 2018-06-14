@@ -12,7 +12,9 @@ from auditing.streets import audit_street_name
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('file', default='street_names.txt', nargs='?', help='The street name file to use.')
+    parser.add_argument('file', nargs='?',
+                        default='street_names.txt',
+                        help='The street name file to use.')
     args = parser.parse_args()
 
     if not os.path.exists(args.file) or not os.path.isfile(args.file):
