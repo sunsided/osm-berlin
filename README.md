@@ -61,3 +61,27 @@ The smaller Berlin Mitte region, in contrast, contains the following counts:
 
 A description of the base elements `node`, `way`, `relation` and `tag`
 can be found [here](http://wiki.openstreetmap.org/wiki/Elements).
+
+## Street name auditing
+
+Street names can be collected into a file `street_names.txt` using
+
+```bash
+python collect_street_names.py --out street_names.txt
+```
+
+To check name auditing, call
+
+```bash
+python test_street_names.py --out street_names.txt
+```
+
+This runs a sequence of validation and correction steps and should print out a report like the following:
+
+```
+Skipped "Allee der Kosmonauten/ Märkische Allee": Not a street.
+Skipped "Eichner Grenzweg/Ahrensfelder Chaussee": Not a street.
+Corrected "Ernst Zinna Weg" to "Ernst-Zinna-Weg".
+Skipped "U-Bahnhof Alt-Tempelhof": Not a street.
+Corrected "Waterloo Ufer" to "Waterloo-Ufer".
+```
