@@ -30,6 +30,7 @@ for ev, el in open_and_parse(args.file, events=('start', 'end'), progress=progre
         cnt[path] += 1
     else:
         stack.pop()
+        
 
 progress.close()
 

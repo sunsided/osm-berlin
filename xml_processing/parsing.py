@@ -38,11 +38,18 @@ def open_and_parse(filename: str, events: Union[str, Iterable[str]],
 
     open_gzip = probe_gzip()
     with _open_file(filename, open_gzip=open_gzip) as f:
-        for event in iterparse(f, events=events):
+        root = None
+        for event, elem in iterparse(f, events=events):
             if progress is not None:
                 current = f.tell() if not open_gzip else f._fp.tell()
                 progress.update(current - progress.n)
-            yield event
+            yield event, elem
+            # To save memory, we need to clear the element.
+            # See e.g.
+            # - https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
+            # - https://stackoverflow.com/questions/7697710/python-running-out-of-memory-parsing-xml-using-celementtree-iterparse
+            root = elem if root is None else root
+            root.clear()
 
 
 def _open_file(filename: str, open_gzip: bool) -> Any:
