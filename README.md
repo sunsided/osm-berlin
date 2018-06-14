@@ -1,6 +1,6 @@
 # OpenStreetMaps Data Wrangling
 
-**GIT LFS:** This repo tracks files using [GIT LFS](https://git-lfs.github.com/). Install before cloning.
+**GIT LFS:** This repo tracks files using [GIT LFS](https://git-lfs.github.com/). Install GIT LFS first, then clone regularly.
 
 This project deals with wrangling of OpenStreetMap data of Berlin, Germany.
 Two regions were used:
