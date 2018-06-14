@@ -1,5 +1,7 @@
 # OpenStreetMaps Data Wrangling
 
+**GIT LFS:** This repo tracks files using [GIT LFS](https://git-lfs.github.com/). Install before cloning.
+
 This project deals with wrangling of OpenStreetMap data of Berlin, Germany.
 Two regions were used:
 
@@ -10,16 +12,16 @@ Two regions were used:
     * Region: `52.52912..52.53794 N`, `13.39977..13.40550 E` ([OSM](http://www.openstreetmap.org/#map=17/52.53110/13.40201)).
     * `148 KB` compressed, `1.9 MB` decompressed XML.
 
-Both can be downloaded e.g. by querying the XAPI Compatibility Layer
-of the Overpass API (see [here](https://wiki.openstreetmap.org/wiki/Overpass_API/XAPI_Compatibility_Layer)):
+These are of particular interest to me, because Berlin is my hometown and Berlin Mitte
+is the district in which I grew up and went to school.
+
+If needed, both regions can be downloaded again e.g. by querying the XAPI Compatibility Layer
+of the OSM Overpass API (see [here](https://wiki.openstreetmap.org/wiki/Overpass_API/XAPI_Compatibility_Layer)):
 
 ```bash
 wget -O berlin.osm 'http://www.overpass-api.de/api/xapi?*[bbox=13.0709838,52.3319824,13.7741088,52.6797125][@meta][@timeout=3600]'
 wget -O berlin-mitte.osm 'http://www.overpass-api.de/api/xapi?*[bbox=13.39977,52.52912,13.40550,52.53794][@meta]'
 ```
-
-These are of particular interest to me, because Berlin is my hometown and Berlin Mitte
-is the district in which I grew up and went to school.
 
 ## OSM XML tag survey
 
