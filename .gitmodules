@@ -1,4 +1,0 @@
-[submodule "osm-extracts"]
-	path = osm-extracts
-	url = git@github.com:sunsided/DAND-OSM-Berlin.git
-	branch = osm-extracts
