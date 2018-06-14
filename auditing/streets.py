@@ -40,14 +40,20 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
 
     # Before applying the regex sledgehammer we try to handle
     # the easier fixes directly
-    if name[0].islower():
-        return False, name[0].upper() + name[1:]
-    elif name.endswith('staße'):
-        return False, name[:-5] + 'straße'
-    elif name.endswith('promedade'):
-        return False, name[:-9] + 'promenade'
-    elif name in known_corrections:
+    if name in known_corrections:
         return False, known_corrections[name]
+    if name[0].islower():
+        name = name[0].upper() + name[1:]
+    if name.endswith('staße'):
+        name = name[:-5] + 'straße'
+    if name.endswith('strasse'):
+        name = name[:-7] + 'straße'
+    if name.endswith(' Str.'):
+        name = name[:-1] + 'aße'
+    if name.endswith('str.'):
+        name = name[:-1] + 'aße'
+    if name.endswith('promedade'):
+        name = name[:-9] + 'promenade'
 
     # Check if any of the positive regexes match.
     ms = [regex.search(name) for regex in valid_street_names]
@@ -57,7 +63,7 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
     # Finally, if the name could not be corrected and didn't check out,
     # we're raising an error. Either the dictionaries/sets need to be
     # fixed or the regexes do not capture all required cases.
-    raise ValueError('No correction found for the given street name.')
+    raise ValueError(f'No correction found for the given street name: {name}')
 
 
 # The following set contains all rules gathered during initial screening
@@ -102,6 +108,7 @@ valid_street_names = {
         # Üderseestraße
         # Buchholzweg
         # Wilhelmsaue
+        # Turmauen
         # Andréezeile
         # Waldwinkel
         # Vogelsang
@@ -110,16 +117,18 @@ valid_street_names = {
         # Albrechts Teerofen
         # Gendarmenmarkt
         # Landrèstraße
-        re.compile(r'^([A-ZÄÖÜ][a-zäöüß]+(s|e[rs])?\s)?[A-ZÄÖÜ][a-zäöüßáéè]+(straße|weg|allee|platz|aue|gestell|ufer|'
+        re.compile(r'^([A-ZÄÖÜ][a-zäöüß]+(s|e[rs])?\s)?[A-ZÄÖÜ][a-zäöüßáéè]+(straße|weg|allee|platz|auen?|gestell|ufer|'
                    r'hof|steg|ring|damm|zeile|park|gasse|hain|grund|stieg|steig|pfad|tal|horst|promenade|schlag|rain|'
                    r'kiez|korso|enden|marken|winkel|sang|trift|werk|feld|bahn|höhe|stern|passage|chaussee|siedlung|'
                    r'garten|blick|kamp|bogen|hafen|schanze|zug|grabern|kehre|beize|sprung|schneise|gang|hahn|ruf|anger|'
                    r'fang|tisch|wechsel|berg|graben|balz|ofen|heide|linde|eck|plan|busch|segen|dreesch|mühle|markt|'
-                   r'insel|fichten|bau|wald|berge|hang|rode|wöhrde|dorf)$', re.UNICODE),
+                   r'insel|fichten|bau|wald|berge|hang|rode|werder|wöhrde|dorf)$', re.UNICODE),
         # Straße 52b
         # Straße 577
         # Straße G
-        re.compile(r'^Straße\s([0-9]+[a-z]?|[A-Z])$', re.UNICODE),
+        # Platz E
+        # Weg P
+        re.compile(r'^(Straße|Platz|Weg)\s([0-9]+[a-z]?|[A-Z])$', re.UNICODE),
         # Altglienicker Grund
         # Zossener Straße
         # Angerburger Allee
@@ -146,7 +155,8 @@ valid_street_names = {
         # Gewerbegebiet zum Wasserwerk
         # Industriegelände
         # Siedlung am Fließ
-        re.compile(r'^(Gewerbegebiet|Industriegelände|Siedlung)(\s([a-zäöüß]+\s)[A-ZÄÖÜ][a-zäöüß]+?)?$', re.UNICODE),
+        # Kleingartenanlage Am Mühlenfließ
+        re.compile(r'^(Gewerbegebiet|Industriegelände|Siedlung|Kleingartenanlage)(\s(A?[a-zäöüß]+\s)[A-ZÄÖÜ][a-zäöüß]+?)?$', re.UNICODE),
         # Alma-Straße
         # Justus-von-Liebig-Straße
         # Kaiserin-Augusta-Allee
@@ -173,7 +183,8 @@ valid_street_names = {
         # Weg ins Feld
         # Ring am Feld
         # Glück im Winkel
-        re.compile(r'^((Straße|Glück|Platz)\s(der|des|im|am|vor|vor dem|zum)|Weg\sins|Ring\sam)\s([A-Z][a-zäöüßé]+\s|'
+        # Straße nach Blumberg
+        re.compile(r'^((Straße|Glück|Platz|Weg)\s(der|des|im|am|vor|vor dem|zum|nach)|Weg\sins|Ring\sam)\s([A-Z][a-zäöüßé]+\s|'
                    r'[1-9][0-9]*\.\s)?([A-Z][a-zäöüßé]+|[A-Z]+)$', re.UNICODE),
         # Rue Doret
         # Rue Henri Guillaumet
@@ -205,15 +216,22 @@ known_valids = {'Neu Zittauer Straße',
                 'Ausbau Mühle',
                 'Grüne Trift am Walde',
                 'Heide in den Bergen',
-                'Renate-Privatstraße'
+                'Renate-Privatstraße',
+                'Am Landschaftspark Gatow',
+                'Behnitz',
+                'Helma-Bogen',
+                'Kleingartenanlage Spreethal/Kanne'
                 }
 
 # Set of names that are known not to be a road (in Berlin).
 not_a_road = {'U-Bahnhof Alt-Tempelhof',
-              'Allee der Kosmonauten/ Märkische Allee'
+              'Allee der Kosmonauten/ Märkische Allee',
+              'Eichner Grenzweg/Ahrensfelder Chaussee'
               }
 
 # Mapping of known errors to their fixes.
 known_corrections = {'Bernauer street': 'Bernauer Straße',
-                     'Thomas-Müntzer Straße': 'Thomas-Müntzer-Straße'
+                     'Thomas-Müntzer Straße': 'Thomas-Müntzer-Straße',
+                     'Ernst Zinna Weg': 'Ernst-Zinna-Weg',
+                     'Waterloo Ufer': 'Waterloo-Ufer'
                      }
