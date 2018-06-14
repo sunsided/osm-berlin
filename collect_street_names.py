@@ -24,8 +24,12 @@ def validate_osm_version(events):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('file', default='berlin_custom.osm.bz2', nargs='?', help='The OSM map file to scan.')
-    parser.add_argument('--out', type=str, default='street_names.txt', help='The file to write street names to.')
+    parser.add_argument('file', nargs='?',
+                        default=os.path.join('osm-extracts', 'berlin.osm.bz2'),
+                        help='The OSM map file to scan.')
+    parser.add_argument('--out', type=str,
+                        default='street_names.txt',
+                        help='The file to write street names to.')
     args = parser.parse_args()
 
     if not os.path.exists(args.file) or not os.path.isfile(args.file):
