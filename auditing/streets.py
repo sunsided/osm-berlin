@@ -29,6 +29,7 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
 
     # Make sure there are no white spaces around
     name = name.strip()
+    original_name = name
 
     # Override checks first
     if name in known_valids:
@@ -42,6 +43,7 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
     # the easier fixes directly
     if name in known_corrections:
         return False, known_corrections[name]
+
     if name[0].islower():
         name = name[0].upper() + name[1:]
     if name.endswith('staße'):
@@ -55,10 +57,13 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
     elif name.endswith('promedade'):
         name = name[:-9] + 'promenade'
 
+    # Make sure the easy fixes are noticed.
+    was_valid = name == original_name
+
     # Check if any of the positive regexes match.
     ms = [regex.search(name) for regex in valid_street_names]
     if any(m is not None for m in ms):
-        return True, name
+        return was_valid, name
 
     # Finally, if the name could not be corrected and didn't check out,
     # we're raising an error. Either the dictionaries/sets need to be

@@ -80,8 +80,12 @@ This runs a sequence of validation and correction steps and should print out a r
 
 ```
 Skipped "Allee der Kosmonauten/ Märkische Allee": Not a street.
+Corrected "Bergstrasse" to "Bergstraße".
+Corrected "Blankenfelder Str." to "Blankenfelder Straße".
 Skipped "Eichner Grenzweg/Ahrensfelder Chaussee": Not a street.
 Corrected "Ernst Zinna Weg" to "Ernst-Zinna-Weg".
+Corrected "Stadtrandstaße" to "Stadtrandstraße".
+Corrected "Strandpromedade" to "Strandpromenade".
 Skipped "U-Bahnhof Alt-Tempelhof": Not a street.
 Corrected "Waterloo Ufer" to "Waterloo-Ufer".
 ```
