@@ -26,7 +26,7 @@ def main():
             name = line.rstrip(os.linesep)
             was_valid, valid = audit_street_name(name)
             if valid is None:
-                print(f'Skipped "{name}": Not a street.')
+                print(f'  Skipped "{name}": Not a street.')
                 continue
 
             if not was_valid:
