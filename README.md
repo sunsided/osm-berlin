@@ -73,7 +73,7 @@ python collect_street_names.py --out street_names.txt
 To check name auditing, call
 
 ```bash
-python test_street_names.py --out street_names.txt
+python test_street_names.py street_names.txt
 ```
 
 This runs a sequence of validation and correction steps and should print out a report like the following:
