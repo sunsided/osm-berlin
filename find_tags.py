@@ -4,7 +4,7 @@ from collections import Counter
 from tqdm import tqdm
 from argparse import ArgumentParser
 
-from xml_processing.parsing import open_and_parse
+from data_wrangling.xml_processing.parsing import open_and_parse
 
 
 parser = ArgumentParser()

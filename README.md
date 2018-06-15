@@ -88,5 +88,4 @@ Corrected "Stadtrandstaße" to "Stadtrandstraße".
 Corrected "Strandpromedade" to "Strandpromenade".
   Skipped "U-Bahnhof Alt-Tempelhof": Not a street.
 Corrected "Waterloo Ufer" to "Waterloo-Ufer".
-
 ```

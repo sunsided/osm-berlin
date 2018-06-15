@@ -7,7 +7,7 @@ import os
 
 from argparse import ArgumentParser
 
-from auditing.streets import audit_street_name
+from data_wrangling.auditing.streets import audit_street_name
 
 
 def main():

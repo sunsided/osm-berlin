@@ -7,7 +7,7 @@ from typing import Set
 
 from tqdm import tqdm
 
-from xml_processing.parsing import open_and_parse
+from data_wrangling.xml_processing.parsing import open_and_parse
 
 
 def is_street_name(elem):
