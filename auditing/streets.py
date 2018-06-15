@@ -46,13 +46,13 @@ def audit_street_name(name: str) -> Tuple[bool, Optional[str]]:
         name = name[0].upper() + name[1:]
     if name.endswith('staße'):
         name = name[:-5] + 'straße'
-    if name.endswith('strasse'):
+    elif name.endswith('strasse'):
         name = name[:-7] + 'straße'
-    if name.endswith(' Str.'):
+    elif name.endswith(' Str.'):
         name = name[:-1] + 'aße'
-    if name.endswith('str.'):
+    elif name.endswith('str.'):
         name = name[:-1] + 'aße'
-    if name.endswith('promedade'):
+    elif name.endswith('promedade'):
         name = name[:-9] + 'promenade'
 
     # Check if any of the positive regexes match.
