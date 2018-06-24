@@ -89,3 +89,11 @@ Corrected "Strandpromedade" to "Strandpromenade".
   Skipped "U-Bahnhof Alt-Tempelhof": Not a street.
 Corrected "Waterloo Ufer" to "Waterloo-Ufer".
 ```
+
+## XML Processing
+
+This project uses `lxml.etree` rather than `xml.etree.cElementTree`
+due to its additional schema validation capabilities.
+Since no official XSD document seems to be available for
+the OSD format, a definition was taken from [here](https://gist.github.com/simon04/24ac9e9b1d0ce3c6655c1ffb2329ebc7).
+It can be found at [`osm-extracts/osm.xsd`](osm-extracts/osm.xsd).

@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 from tqdm import tqdm
 
-from data_wrangling.ml_processing.parsing import open_and_parse
+from data_wrangling.xml_processing import open_and_parse
 
 
 def is_street_name(elem):

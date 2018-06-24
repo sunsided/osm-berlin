@@ -1,14 +1,17 @@
 import os
 import bz2
 
-from xml.etree.cElementTree import iterparse, Element, ParseError
+import lxml.etree as etree
+from lxml.etree import iterparse, Element, ParseError
+
 from typing import Any, Union, Iterable, Tuple, Optional
 
 from tqdm import tqdm
 
 
 def open_and_parse(filename: str, events: Union[str, Iterable[str]],
-                   progress: Optional[tqdm]) -> Iterable[Tuple[str, Element]]:
+                   progress: Optional[tqdm],
+                   schema_filename: Optional[str] = None) -> Iterable[Tuple[str, Element]]:
     if isinstance(events, str):
         events = (events,)
 
@@ -19,12 +22,16 @@ def open_and_parse(filename: str, events: Union[str, Iterable[str]],
         progress.unit_scale = True
         progress.total = os.path.getsize(filename)
 
+    xsd_path = schema_filename if schema_filename is not None else os.path.join('osm-extracts', 'osm.xsd')
+    xsd_doc = etree.parse(xsd_path)
+    schema = etree.XMLSchema(etree=xsd_doc)
+
     def probe_gzip() -> bool:
         try:
             with _open_file(filename, open_gzip=True) as pf:
                 # An error is only thrown at the first attempt to read, so
                 # we simply
-                next(iterparse(pf, events=('start',)))
+                next(iterparse(pf, events=('start',), schema=schema))
                 return True  # it's a gzipped file
         except OSError:
             pass
