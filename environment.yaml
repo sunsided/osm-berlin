@@ -4,10 +4,14 @@ channels:
 dependencies:
   - ca-certificates=2018.03.07=0
   - certifi=2018.4.16=py36_0
+  - icu=58.2=h9c2bf20_1
   - libedit=3.1.20170329=h6b74fdf_2
   - libffi=3.2.1=hd88cf55_4
   - libgcc-ng=7.2.0=hdf63c60_3
   - libstdcxx-ng=7.2.0=hdf63c60_3
+  - libxml2=2.9.8=h26e45fe_1
+  - libxslt=1.1.32=h1312cb7_0
+  - lxml=4.2.1=py36h23eabaa_0
   - ncurses=6.1=hf484d3e_0
   - openssl=1.0.2o=h20670df_0
   - pip=10.0.1=py36_0
@@ -70,5 +74,3 @@ dependencies:
     - wcwidth==0.1.7
     - webencodings==0.5.1
     - wrapt==1.10.11
-prefix: /opt/anaconda3/envs/dand-osm
-
