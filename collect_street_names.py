@@ -36,7 +36,7 @@ def main():
         parser.error(f'The specified argument is not a valid file: {args.file}')
         exit(1)
 
-    progress = tqdm()
+    progress = tqdm(desc="Extracting street names")
 
     events = open_and_parse(args.file, events=('start',), progress=progress)
     validate_osm_version(events)
@@ -44,18 +44,15 @@ def main():
     street_names = set()
     for ev, el in events:
         assert el.tag != 'osm'
-        if el.tag == 'way':
-            street_name_tags = (tag for tag in el.iter('tag') if is_street_name(tag))
-            for tag in street_name_tags:
-                street_names.add(tag.attrib['v'])
+        if el.tag != 'way':
+            continue
+        street_name_tags = (tag for tag in el.iter('tag') if is_street_name(tag))
+        for tag in street_name_tags:
+            street_names.add(tag.attrib['v'])
 
     with open(args.out, 'w', encoding='utf-8') as f:
-        first = True
-        for s in sorted(street_names):
-            if not first:
-                f.write('\n')
-            first = False
-            f.write(s)
+        lines = '\n'.join(sorted(street_names))
+        f.writelines(lines)
 
 
 if __name__ == '__main__':

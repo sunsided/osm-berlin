@@ -70,13 +70,36 @@ Street names can be collected into a file `street_names.txt` using
 python collect_street_names.py --out street_names.txt
 ```
 
+This creates a file like
+
+```text
+Anklamer Straße
+Arkonaplatz
+Choriner Straße
+Fehrbelliner Straße
+Fürstenberger Straße
+Granseer Straße
+Griebenowstraße
+Rheinsberger Straße
+Ruppiner Straße
+Swinemünder Straße
+Torstraße
+Veteranenstraße
+Weinbergsweg
+Wolliner Straße
+Zehdenicker Straße
+Zionskirchplatz
+Zionskirchstraße
+```
+
 To check name auditing, call
 
 ```bash
 python test_street_names.py street_names.txt
 ```
 
-This runs a sequence of validation and correction steps and should print out a report like the following:
+This runs a sequence of validation and correction steps and should print out a report like the following
+(depending on the set of street names):
 
 ```
   Skipped "Allee der Kosmonauten/ Märkische Allee": Not a street.
