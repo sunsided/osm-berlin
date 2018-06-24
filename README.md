@@ -62,7 +62,43 @@ The smaller Berlin Mitte region, in contrast, contains the following counts:
 A description of the base elements `node`, `way`, `relation` and `tag`
 can be found [here](http://wiki.openstreetmap.org/wiki/Elements).
 
-## Street name auditing
+The `find_tag_keys.py` script counts all `tag` keys. The result looks e.g. like
+this: 
+
+```
+         2 abandoned:place
+        46 access
+      1004 addr:city
+       966 addr:country
+         2 addr:flats
+         2 addr:housename
+      1030 addr:housenumber
+         4 addr:inclusion
+      1010 addr:postcode
+      1027 addr:street
+       970 addr:suburb
+         2 advertising
+        12 alt_name
+...
+         2 diet:vegan
+         4 diet:vegetarian
+         2 direction
+         2 dispensing
+         2 disused:shop
+         2 drink:wine
+         4 drinking_water
+...
+         2 toilets
+        28 toilets:wheelchair
+...
+       317 wheelchair
+         8 wheelchair:description
+        23 wikidata
+        19 wikipedia
+         2 workrules
+```
+
+## Auditing example: Street names
 
 Street names can be collected into a file `street_names.txt` using
 

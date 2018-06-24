@@ -1,8 +1,14 @@
 import os
 import re
 
+from .AuditTag import AuditTag
 from typing import Optional, Tuple
 from xml.etree.cElementTree import Element
+
+
+class AuditStreetName(AuditTag):
+    def __init__(self):
+        super().__init__('way', is_street_name, audit_street_name)
 
 
 def is_street_name(elem: Element) -> bool:
