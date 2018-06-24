@@ -1,0 +1,25 @@
+version: "3"
+services:
+
+  db:
+    image: mongo:3.6
+    command: [
+      "mongod",
+      "--port", "27017",
+      "--bind_ip", "127.0.0.1",
+      "--nounixsocket",
+      "--noauth",
+      "--dbpath", "/data/db",
+      "--directoryperdb",
+      "--smallfiles",
+      "--nojournal",
+      "--storageEngine", "wiredTiger",
+      "--wiredTigerCacheSizeGB", "1",
+      "--wiredTigerDirectoryForIndexes"
+      ]
+    restart: unless-stopped
+    volumes:
+      - ./data:/data:delegated
+    network_mode: "host"
+    #ports:
+    #- "127.0.0.7:27017:27017/tcp"
