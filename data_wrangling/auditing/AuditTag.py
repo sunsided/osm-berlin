@@ -50,13 +50,13 @@ class AuditTag:
                 if was_valid:
                     continue
                 if corrected is None:
-                    el.remove(tag)
-                    self._attributes_removed += 1
-                    continue
+                    raise ValueError
                 self._attributes_corrected += 1
                 tag.attrib['v'] = corrected
+                # print(f'Corrected tag {tag.attrib["k"]} to {corrected}')
             except ValueError:
-                el.remove(tag)
+                # print(f'Deleted tag {tag.attrib["k"]}: uncorrectable.')
+                tag.attrib['v'] = 'INVALID-REMOVED'
                 self._attributes_removed += 1
         return el
 
