@@ -8,7 +8,7 @@ from xml.etree.cElementTree import Element
 
 class AuditStreetName(AuditTag):
     def __init__(self):
-        super().__init__('way', is_street_name, audit_street_name)
+        super().__init__(['node', 'way', 'relation'], is_street_name, audit_street_name)
 
 
 def is_street_name(elem: Element) -> bool:

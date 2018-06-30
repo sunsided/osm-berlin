@@ -42,7 +42,7 @@ def main():
 
     collection.create_index([('_id.type', pymongo.ASCENDING)], background=True, unique=False)
     collection.create_index([('user.name', pymongo.ASCENDING)], background=True, unique=False)
-    collection.create_index([('user.uid', pymongo.ASCENDING)], background=True, unique=False)
+    collection.create_index([('user.id', pymongo.ASCENDING)], background=True, unique=False)
     collection.create_index([('t', pymongo.ASCENDING)], background=True, unique=False)
     collection.create_index([('tag_keys', pymongo.TEXT),
                              ('tag_values', pymongo.TEXT)], background=True, unique=False)

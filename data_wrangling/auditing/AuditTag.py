@@ -1,12 +1,12 @@
 from xml.etree.cElementTree import Element
-from typing import Tuple, Optional, Callable
+from typing import Tuple, Optional, Callable, Union, Iterable
 
 
 class AuditTag:
     """
     Performs auditing of a single XML tag.
     """
-    def __init__(self, applies_to_tag: str,
+    def __init__(self, applies_to_tag: Union[str, Iterable[str]],
                  filter_fn: Callable[[Element], bool],
                  audit_fn: Callable[[str], Tuple[bool, str]]):
         """
@@ -16,7 +16,9 @@ class AuditTag:
         :param audit_fn: A function returning either the original or corrected XML element or None
                          if the element could not be corrected.
         """
-        self._tag = applies_to_tag
+        if isinstance(applies_to_tag, str):
+            applies_to_tag = {applies_to_tag}
+        self._tag = set(applies_to_tag)
         self._filter = filter_fn
         self._audit = audit_fn
         self._attributes_removed = 0
@@ -38,7 +40,7 @@ class AuditTag:
                  automatically or None, if the element was invalid and could
                  not be corrected automatically.
         """
-        if el.tag != self._tag:
+        if el.tag not in self._tag:
             return el
         for tag in list(el.iter('tag')):
             if not self._filter(tag):
