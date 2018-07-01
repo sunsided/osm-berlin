@@ -1,7 +1,8 @@
 # Supplemental data
 
 The `get_district_geojson()` function returns a dictionary of
-district names to their boundaries.
+district names to their boundaries. The `geojson_area()` function
+returns the are of a GeoJSON polygon.
 
 ## GeoJSON files
 
